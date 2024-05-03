@@ -13,7 +13,7 @@ public static void main(String[] args) throws NumberFormatException, IOException
 	StringTokenizer st = new StringTokenizer(str); 
 	for(int i =0;i<N;++i) {
 		String key = st.nextToken();
-		Long value = Long.parseLong(key);
+		long value = Long.parseLong(key);
 		map.put(key, value);
 	}
 	StringBuilder sb = new StringBuilder();
@@ -22,10 +22,10 @@ public static void main(String[] args) throws NumberFormatException, IOException
 	StringTokenizer st2 = new StringTokenizer(str2);
 	for(int i =0;i<M;++i) {
 		String key = st2.nextToken();
-		Long value = Long.parseLong(key);
+		long value = Long.parseLong(key);
 		try {
-			if(map.get(key).equals(value)) {
-				sb.append(1).append("\n"); 
+			if(map.get(key)==(value)) {
+				sb.append(1).append("\n");
 			}
 		} catch (Exception e) {
 			sb.append(0).append("\n");
