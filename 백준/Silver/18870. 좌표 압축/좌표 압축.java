@@ -21,7 +21,7 @@ public class Main {
                 map.put(key,1);
             }
         }
-        Integer[] arr2 = map.keySet().toArray(new Integer[0]);
+        int[] arr2 = map.keySet().stream().mapToInt(Integer::intValue).toArray();
         Arrays.sort(arr2);
         for(int i=0; i<arr2.length;++i){
             map.put(arr2[i],i);
