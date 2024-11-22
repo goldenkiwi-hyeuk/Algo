@@ -32,8 +32,10 @@ public class Main {
         int M = Integer.parseInt(st.nextToken());
         int X = Integer.parseInt(st.nextToken());
         List<List<Edge>> edgeList = new ArrayList<>();
+        List<List<Edge>> reverseEdgeList = new ArrayList<>();
         for(int i = 0; i <= N; i++){
             edgeList.add(new ArrayList<>());
+            reverseEdgeList.add(new ArrayList<>());
         }
         for(int i = 0; i < M; i++){
             str = br.readLine();
@@ -42,32 +44,46 @@ public class Main {
             int end = Integer.parseInt(st.nextToken());
             int cost = Integer.parseInt(st.nextToken());
             edgeList.get(start).add(new Edge(end,cost));
+            reverseEdgeList.get(end).add(new Edge(start,cost));
         }
-        int[][] dist = new int[N+1][N+1];
+        int[] dist = new int[N+1];
+        int[] reverseDist = new int[N+1];
         int INF = 987654321;
-        Arrays.fill(dist[0], INF);
-        for (int i = 1; i <= N; i++){
-            Arrays.fill(dist[i], INF);
-            PriorityQueue<Edge> pq = new PriorityQueue<>();
-            boolean[] visited = new boolean[N+1];
-            dist[i][i] = 0;
-            pq.add(new Edge(i,0));
-            while (!pq.isEmpty()){
-                Edge edge = pq.poll();
-                if (visited[edge.end]){ continue; }
-                visited[edge.end] = true;
-                for (Edge e : edgeList.get(edge.end)){
-                    if(dist[i][e.end]>dist[i][edge.end]+e.cost){
-                        dist[i][e.end] = dist[i][edge.end]+e.cost;
-                        pq.add(new Edge(e.end,dist[i][e.end]));
-                    }
+        Arrays.fill(dist, INF);
+        Arrays.fill(reverseDist, INF);
+        dist[X] = 0;
+        reverseDist[X] = 0;
+        PriorityQueue<Edge> pq = new PriorityQueue<>();
+        boolean[] visited = new boolean[N+1];
+        pq.add(new Edge(X,0));
+        while(!pq.isEmpty()){
+            Edge e = pq.poll();
+            if(visited[e.end]){ continue; }
+            visited[e.end] = true;
+            for(Edge edge : edgeList.get(e.end)){
+                if(dist[edge.end] > dist[e.end] + edge.cost){
+                    dist[edge.end] = dist[e.end] + edge.cost;
+                    pq.add(new Edge(edge.end, dist[edge.end]));
+                }
+            }
+        }
+        visited = new boolean[N+1];
+        pq.add(new Edge(X,0));
+        while(!pq.isEmpty()){
+            Edge e = pq.poll();
+            if(visited[e.end]){ continue; }
+            visited[e.end] = true;
+            for(Edge edge : reverseEdgeList.get(e.end)){
+                if(reverseDist[edge.end] > reverseDist[e.end] + edge.cost){
+                    reverseDist[edge.end] = reverseDist[e.end] + edge.cost;
+                    pq.add(new Edge(edge.end, reverseDist[edge.end]));
                 }
             }
         }
         int max = 0;
         for (int i = 1; i <= N; i++) {
-            if(dist[i][X]+dist[X][i]>max){
-                max = dist[i][X]+dist[X][i];
+            if(dist[i]+reverseDist[i]>max){
+                max = dist[i]+reverseDist[i];
             }
         }
         System.out.println(max);
