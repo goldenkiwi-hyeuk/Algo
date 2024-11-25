@@ -11,11 +11,13 @@ public class Main {
         int M = Integer.parseInt(br.readLine());
         int[][] dp = new int[N][N];
         int INF = 987654321;
+        
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 dp[i][j] = INF;
             }
         }
+        
         for (int i = 0; i < M; i++) {
             String str = br.readLine();
             StringTokenizer st = new StringTokenizer(str);
@@ -24,18 +26,18 @@ public class Main {
             int cost = Integer.parseInt(st.nextToken());
             dp[start - 1][end - 1] = Math.min(dp[start - 1][end - 1], cost);
         }
-
-        for (int s = 0; s < 2; s++) {
+        
+        for (int k = 0; k < N; k++) {
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
-                    for (int k = 0; k < N; k++) {
-                        dp[i][j] = Math.min(dp[i][j], dp[i][k] + dp[k][j]);
-                        dp[j][i] = Math.min(dp[j][i], dp[j][k] + dp[k][i]);
-                    }
+                    dp[i][j] = Math.min(dp[i][j], dp[i][k] + dp[k][j]);
+                    dp[j][i] = Math.min(dp[j][i], dp[j][k] + dp[k][i]);
                 }
             }
         }
+
         StringBuilder sb = new StringBuilder();
+
         for (int i = 0; i < N; i++) {
             for (int j = 0; j < N; j++) {
                 if (i == j) {
