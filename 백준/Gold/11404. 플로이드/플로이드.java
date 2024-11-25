@@ -31,7 +31,6 @@ public class Main {
             for (int i = 0; i < N; i++) {
                 for (int j = 0; j < N; j++) {
                     dp[i][j] = Math.min(dp[i][j], dp[i][k] + dp[k][j]);
-                    dp[j][i] = Math.min(dp[j][i], dp[j][k] + dp[k][i]);
                 }
             }
         }
