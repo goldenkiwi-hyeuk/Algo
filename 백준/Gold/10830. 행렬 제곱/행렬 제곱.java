@@ -23,29 +23,26 @@ public class Main {
                 A[i][j] = Integer.parseInt(st.nextToken());
             }
         }
+        int[][] answer = getpow(B);
         StringBuilder sb = new StringBuilder();
-        if(B == 1){
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
-                    sb.append(A[i][j]%1000).append(" ");
-                }
-                sb.append("\n");
+        for (int i = 0; i < N; i++) {
+            for (int j = 0; j < N; j++) {
+                sb.append(answer[i][j]).append(" ");
             }
-        } else {
-            int[][] answer = getpow(B);
-            for (int i = 0; i < N; i++) {
-                for (int j = 0; j < N; j++) {
-                    sb.append(answer[i][j]).append(" ");
-                }
-                sb.append("\n");
-            }   
+            sb.append("\n");
         }
         System.out.println(sb);
     }
 
     private static int[][] getpow(long b) {
         if (b == 1) {
-            return A;
+            int[][] temp = new int[N][N];
+            for (int i = 0; i < N; i++) {
+                for (int j = 0; j < N; j++) {
+                    temp[i][j] = A[i][j] % mod;
+                }
+            }
+            return temp;
         }
         if (b % 2 == 0) {
             int[][] temp = getpow(b / 2);
