@@ -45,12 +45,9 @@ public class Main {
         Arrays.fill(dist, 987654321);
         dist[startPoint] = 0;
         boolean[] visited = new boolean[N+1];
+        int[] prev = new int[N+1];
+        prev[startPoint] = -1;
         PriorityQueue<Edge> pq = new PriorityQueue<>();
-        List<List<Integer>> routes = new ArrayList<>();
-        for (int i=0; i<=N; i++) {
-            routes.add(new ArrayList<Integer>());
-        }
-        routes.get(startPoint).add(startPoint);
         pq.add(new Edge(startPoint, 0));
         while (!pq.isEmpty()) {
             Edge edge = pq.poll();
@@ -59,18 +56,22 @@ public class Main {
             for (Edge e : nodeList.get(edge.end)) {
                 if (dist[e.end] > dist[edge.end] + e.cost) {
                     dist[e.end] = dist[edge.end] + e.cost;
-                    routes.get(e.end).clear();
-                    routes.get(e.end).addAll(routes.get(edge.end));
-                    routes.get(e.end).add(e.end);
+                    prev[e.end] = edge.end;
                     pq.add(new Edge(e.end, dist[edge.end]+e.cost));
                 }
             }
         }
         StringBuilder sb = new StringBuilder();
         sb.append(dist[endPoint]).append("\n");
-        sb.append(routes.get(endPoint).size()).append("\n");
-        for (Integer i : routes.get(endPoint)) {
-            sb.append(i).append(" ");
+        List<Integer> route = new ArrayList<>();
+        int previdx = endPoint;
+        while(previdx != -1){
+            route.add(previdx);
+            previdx = prev[previdx];
+        }
+        sb.append(route.size()).append("\n");
+        for (int i=route.size()-1; i>=0; i--) {
+            sb.append(route.get(i)).append(" ");
         }
         System.out.println(sb);
     }
