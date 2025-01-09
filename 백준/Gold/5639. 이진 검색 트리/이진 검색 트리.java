@@ -8,7 +8,7 @@ public class Main {
     public static class Node {
         int num;
 
-        Node left, right, father;
+        Node left, right;
 
         public Node() {
         }
@@ -17,11 +17,10 @@ public class Main {
             this.num = num;
         }
 
-        public Node(int num, Node left, Node right, Node father) {
+        public Node(int num, Node left, Node right) {
             this.num = num;
             this.left = left;
             this.right = right;
-            this.father = father;
         }
     }
 
@@ -49,7 +48,6 @@ public class Main {
             if (node.num > nodeList.get(i).num){
                 if (node.left == null){
                     node.left = nodeList.get(i);
-                    nodeList.get(i).father = node;
                     break;
                 } else {
                     node = node.left;
@@ -57,7 +55,6 @@ public class Main {
             } else {
                 if (node.right == null){
                     node.right = nodeList.get(i);
-                    nodeList.get(i).father = node;
                     break;
                 } else {
                     node = node.right;
