@@ -27,7 +27,7 @@ public class Main {
         StringTokenizer st = new StringTokenizer(str);
         int N = Integer.parseInt(st.nextToken());
         int K = Integer.parseInt(st.nextToken());
-        PriorityQueue<Loc> pq = new PriorityQueue<Loc>();
+        Deque<Loc> pq = new ArrayDeque<>();
         pq.add(new Loc(N, 0));
         int min = Integer.MAX_VALUE;
         int cnt = 0;
