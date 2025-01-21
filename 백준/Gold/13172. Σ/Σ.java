@@ -14,9 +14,6 @@ public class Main {
             StringTokenizer st = new StringTokenizer(br.readLine());
             int n = Integer.parseInt(st.nextToken());
             int s = Integer.parseInt(st.nextToken());
-            int gcd = getGcd(n,s);
-            n /= gcd;
-            s /= gcd;
             long num = ((s % Mod) * pow(n, Mod - 2)) % Mod;
             sum = (sum + num) % Mod;
         }
