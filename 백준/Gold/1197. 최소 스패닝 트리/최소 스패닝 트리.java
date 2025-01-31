@@ -67,7 +67,6 @@ public class Main {
 
     private static int findRoot(int num) {
         if (num == root[num]) return num;
-        root[num] = findRoot(root[num]);
-        return root[num];
+        return root[num] = findRoot(root[num]);
     }
 }
