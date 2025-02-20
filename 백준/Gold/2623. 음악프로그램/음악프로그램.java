@@ -22,8 +22,8 @@ public class Main {
             int a = Integer.parseInt(st.nextToken());
             for (int j = 0; j<total-1;++j){
                 int b = Integer.parseInt(st.nextToken());
-                edgelist.get(b).add(a);
-                arr[a]++;
+                edgelist.get(a).add(b);
+                arr[b]++;
                 a = b;
             }
         }
@@ -33,10 +33,10 @@ public class Main {
                 deq.addLast(i);
             }
         }
-        List<Integer> list = new ArrayList<>();
+        StringBuilder sb = new StringBuilder();
         while (!deq.isEmpty()){
             int num = deq.pollFirst();
-            list.add(num);
+            sb.append(num).append("\n");
             for (int child : edgelist.get(num)) {
                 arr[child]--;
                 if (arr[child] == 0){
@@ -52,10 +52,6 @@ public class Main {
             }
         }
         if (isok){
-            StringBuilder sb = new StringBuilder();
-            for (int i = list.size()-1; i>=0;--i){
-                sb.append(list.get(i)).append("\n");
-            }
             System.out.print(sb);
         } else {
             System.out.println(0);
