@@ -1,9 +1,6 @@
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -22,14 +19,16 @@ public class Main {
         int[] arr2 = new int[N];
         str = br.readLine();
         st = new StringTokenizer(str);
+        int max = 0;
         for (int i = 0; i < N; i++) {
             arr2[i] = Integer.parseInt(st.nextToken());
+            max += arr2[i];
         }
-        int[][] dp = new int [N+1][10001];
+        int[][] dp = new int [N+1][max+1];
         for (int i = 1; i <= N; ++i) {
             int effect = arr1[i-1];
             int cost = arr2[i-1];
-            for (int j = 0; j <= 10000; ++j) {
+            for (int j = 0; j <= max; ++j) {
                 if (j<cost){
                     dp[i][j] = dp[i-1][j];
                 } else {
@@ -38,7 +37,7 @@ public class Main {
             }
         }
         int ans = Integer.MAX_VALUE;
-        for (int i = 0; i <= 10000; ++i) {
+        for (int i = 0; i <= max; ++i) {
             if(dp[N][i]>=M){
                 ans = i;
                 break;
