@@ -1,6 +1,4 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 import java.util.StringTokenizer;
 
 public class Main {
@@ -15,27 +13,24 @@ public class Main {
             parent[i] = i;
         }
         int ans = 0;
-        boolean findans = false;
         for (int i = 1; i <= M; i++) {
             st = new StringTokenizer(br.readLine());
             int a = Integer.parseInt(st.nextToken());
             int b = Integer.parseInt(st.nextToken());
-            if (findans) {
-                continue;
-            }
             int pa = findParent(a);
             int pb = findParent(b);
             if (pa == pb) {
                 ans = i;
-                findans = true;
+                break;
             } else {
                 int min = Math.min(pa, pb);
                 int max = Math.max(pa, pb);
                 parent[max] = min;
             }
         }
-
-        System.out.println(ans);
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        bw.write(ans+"");
+        bw.close();
     }
 
     private static int findParent(int a) {
