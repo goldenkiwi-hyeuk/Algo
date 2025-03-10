@@ -49,8 +49,7 @@ class Solution {
                     minIdx = i;
                 }
             }
-            System.out.println(Arrays.toString(cnt));
-            System.out.println(minIdx);
+
             arrk[minIdx]++;                      
             ++now;
         }
