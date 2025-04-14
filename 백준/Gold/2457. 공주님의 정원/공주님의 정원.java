@@ -2,6 +2,10 @@ import java.io.*;
 import java.util.*;
 
 class Main {
+    
+    // 기본아이디어 : 그리디
+    // 현재 만족해야 하는 날짜 보다 작은 날짜들을 전부 골라서
+    // 그중에 꽃이 지는 날짜가 가장 큰 날짜로 갱신 하는 형태
     private static class Date{
         int startM, startD, endM, endD;
         
@@ -28,7 +32,7 @@ class Main {
             flowers[i] = new Date(startM, startD, endM, endD);
         }
         
-        Arrays.sort(flowers, (o1,o2)->{
+        Arrays.sort(flowers, (o1,o2)->{ // 피는 날짜 기준 정렬
             if(o1.startM == o2.startM){
                 if(o1.startD == o2.startD){
                     if(o1.endM == o2.endM){
@@ -43,32 +47,21 @@ class Main {
                 return o1.startM-o2.startM;
             }
         });
-        // for(int i = 0; i<N;++i){
-        //     System.out.print(flowers[i].startM);
-        //     System.out.print(" ");
-        //     System.out.print(flowers[i].startD);
-        //     System.out.print(" ");
-        //     System.out.print(flowers[i].endM);
-        //     System.out.print(" ");
-        //     System.out.print(flowers[i].endD);
-        //     System.out.println(" ");
-        // }
-        int cnt = 0;
-        int idx = 0;
-        int startM = 3;
-        int startD = 1;
+
+        int cnt = 0; // 필요한 꽃의 갯수
+        int idx = 0; // 탐색할 idx
+        int startM = 3; // 요구되는 월
+        int startD = 1; // 요구되는 일
         while(true){
-            // System.out.println("startM : "+startM +", startD : "+startD);
-            if(startM>=12){
+            if(startM>=12){ // 12월을 도달했다는 의미는 이미 11월 30일까지 꽃을 피운 케이스
                 break;
             }
-            int targetM = -1;
+            int targetM = -1; // 지는 날이 가장 늦은 케이스를 담기 위한 변수
             int targetD = -1;
             for(int i = idx ; i<N ; ++i){
-                // System.out.println("flowers[i].startM : "+flowers[i].startM +", flowers[i].startD : "+flowers[i].startD);
-                if((flowers[i].startM < startM )|| (flowers[i].startM == startM&&flowers[i].startD <= startD)){
-                    ++idx;
-                    if(flowers[i].endM>targetM){
+                if((flowers[i].startM < startM )|| (flowers[i].startM == startM&&flowers[i].startD <= startD)){ // 시작 날짜가 요구날짜보다 작으면 
+                    ++idx; // 탐색할 idx를 높이고
+                    if(flowers[i].endM>targetM){ // 지는 날 업데이트
                         targetM = flowers[i].endM;
                         targetD = flowers[i].endD;
                     } else if(flowers[i].endM == targetM){
@@ -81,10 +74,11 @@ class Main {
                 }
             }
             
-            if(targetM == -1 && targetD == -1){
+            if(targetM == -1 && targetD == -1){ // 만약 지는 날이 업데이트 되지 않았다는 의미는 꽃을 연속해서 피울수 없다는 의미
                 cnt = 0;
                 break;
             } else {
+                // 꽃의 개수 증가 및 요구날짜 업데이트
                 ++cnt;
                 startM = targetM;
                 startD = targetD;
