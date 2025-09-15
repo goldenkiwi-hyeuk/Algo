@@ -10,6 +10,11 @@ class Main {
     // Math.pow(2, i와 j사이의 원소 갯수) 만큼 부분집합이 나온다.
     // ans += (arr[j]-arr[i])*((int) Math.pow(2,j-i)/2)
     // 이를 모듈러 연산 처리한다.
+    // -> 시간초과
+    // arr[i]의 기여도로 계산을 하자
+    // arr[i]의 기여도 = a[i] * ( #최대로 등장 − #최소로 등장 )
+    // 최대로 등장 횟수 = 2^(i)
+    // 최소로 등장 횟수 = 2^(N-1-i)
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
@@ -25,11 +30,13 @@ class Main {
         for(int i = 1; i<N ; ++i){
             pow2[i] = (pow2[i-1]*2)%mod;
         }
+        
         long ans = 0;
         for(int i = 0; i<N; ++i){
-            for(int j = i+1; j<N; ++j){
-                ans = ((ans)%mod + ((arr[j]-arr[i])%mod*(pow2[j-i-1])%mod)%mod)%mod;
-            }
+            long max = pow2[i];
+            long min = pow2[N-1-i];
+            long contribute = ((max-min)%mod+mod)%mod; // 음수 보정
+            ans = (ans%mod+((arr[i]%mod)*(contribute))%mod)%mod;
         }
         System.out.println(ans);
     }
