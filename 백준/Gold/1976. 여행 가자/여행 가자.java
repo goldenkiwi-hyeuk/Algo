@@ -5,6 +5,7 @@ import java.util.Arrays;
 import java.util.StringTokenizer;
 
 public class Main {
+    // 기본아이디어 : 플로이드 와샬
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
@@ -15,6 +16,7 @@ public class Main {
             Arrays.fill(arr[i], INF);
         }
 
+        // 연결되어있다면 1, 자기자신은 0으로 값 업데이트
         for (int i = 1; i<=N;++i){
             StringTokenizer st = new StringTokenizer(br.readLine());
             for (int j = 1; j<=N;++j){
@@ -28,6 +30,7 @@ public class Main {
             }
         }
 
+        // 플로이드 와샬 진행
         for (int k = 1; k <= N; k++) {
             for (int i = 1; i <= N; i++) {
                 for (int j = 1; j <= N; j++) {
@@ -36,6 +39,7 @@ public class Main {
             }
         }
 
+        // 여행 계획대로 움직이며 INF 이상 값이 나오는지 탐지 나온다면 해당 길은 연결되어있지 않으니 flag를 false로 업데이트
         StringTokenizer st = new StringTokenizer(br.readLine());
         boolean flag = true;
         int before = Integer.parseInt(st.nextToken());
@@ -49,6 +53,7 @@ public class Main {
             }
         }
 
+        // flag 값에 맞추어 출력
         if (flag){
             System.out.println("YES");
         } else {
